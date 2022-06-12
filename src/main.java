@@ -3,7 +3,7 @@ import medium.*;
 
 public class main {
     public static void main (String arg[]){
-        System.out.println(Q46Permutations.permute(new int[]{2,3,6,7}));
+        System.out.println(Q56MergeIntervals.merge(new int[][]{{1,4},{0,4}}));
         return;
     }
 
