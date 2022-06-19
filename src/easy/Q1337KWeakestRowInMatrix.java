@@ -12,6 +12,8 @@ public class Q1337KWeakestRowInMatrix {
         for(int i=0;i<k;i++) {
             answer[i] = queue.poll()[1];
         }
+
+        List<int[]> list = new LinkedList<>(queue);
         return answer;
 
     }
