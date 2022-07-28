@@ -5,41 +5,48 @@ import dataStructure.TreeNode;
 import java.util.*;
 
 public class Q863AllNodesDistanceKInBinaryTree {
-     List<Integer> answer = new ArrayList<>();
-    Map<TreeNode, TreeNode> childParentMap = new HashMap<>();
-    Set<TreeNode> visited = new HashSet<>();
-
     public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
-        findParent(root);
-        depthFirst(target, k);
-        return answer;
+        Map<TreeNode, TreeNode> childParentMap = new HashMap<>();
+        constructChildParentMap(root, childParentMap);
+
+        List<Integer> result = new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        Set<TreeNode> visited = new HashSet<>();
+        queue.offer(target);
+        int height = 0;
+
+        while(!queue.isEmpty() && height <= k){
+            int qLen = queue.size();
+            for (int i=0; i<qLen; i++){
+                TreeNode node = queue.poll();
+                if (node == null || visited.contains(node)){
+                    continue;
+                }
+                visited.add(node);
+                if (height == k){
+                    result.add(node.val);
+                }
+                queue.offer(node.left);
+                queue.offer(node.right);
+                queue.offer(childParentMap.get(node));
+            }
+            height++;
+        }
+
+        return result;
+
     }
 
-    private void findParent(TreeNode node) {
-        if(node == null) {
-            return;
-        }
-        if(node.left != null) {
-            childParentMap.put(node.left, node);
-            findParent(node.left);
-        }
-        if(node.right != null) {
-            childParentMap.put(node.right, node);
-            findParent(node.right);
-        }
-    }
 
-    private void depthFirst(TreeNode node, int k) {
-        if(node == null || visited.contains(node)) {
-            return;
+    private void constructChildParentMap(TreeNode root, Map<TreeNode,TreeNode> childParentMap){
+        if (root == null) return;
+        if (root.left != null){
+            childParentMap.put(root.left, root);
         }
-        visited.add(node);
-        if(k == 0) {
-            answer.add(node.val);
-            return;
+        if (root.right != null){
+            childParentMap.put(root.right, root);
         }
-        depthFirst(node.left, k-1);
-        depthFirst(node.right, k-1);
-        depthFirst(childParentMap.get(node), k-1);
+        constructChildParentMap(root.left, childParentMap);
+        constructChildParentMap(root.right, childParentMap);
     }
 }
