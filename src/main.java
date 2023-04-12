@@ -10,24 +10,8 @@ import java.util.*;
 
 public class main {
     public static void main (String arg[]){
-        //System.out.println(RandomBehavioralQuestion.pickQuestion());
-        int limit = 100000;
-        int[] arr = new int[limit];
-        for (int i=0; i<limit; i++){
-            arr[i] = new Random().nextInt(limit);
-        }
-
-        Sort sort = new QuickSort();
-        long startTime = System.currentTimeMillis();
-        sort.sort(arr);
-        long endTime = System.currentTimeMillis();
-
-
-        for (int num : arr){
-            //System.out.print(num+",");
-        }
-        System.out.println("Execution Time: " + Long.toString(endTime-startTime) + "ms");
-        return;
+        int[][] connections = new int[][]{{0,1},{0,2}, {1,2}};
+        Q1319NumOfOperationToMakeNetwork.makeConnected(4,connections);
     }
 
 }
